@@ -7,7 +7,6 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        cache.add(self.registration.scope);
         return fetch('files.json').then(function(response) {
           return response.json();
         }).then(function(json) {
@@ -30,8 +29,6 @@ addFetchListener(function(event) {
     .then(function(response) {
       if (response) {
         return response;
-      } else if (event.request.headers.get('accept').indexOf('text/html') >= 0) {
-        return caches.match(self.registration.scope);
       }
     });
 });
